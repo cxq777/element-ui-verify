@@ -1,8 +1,8 @@
 import Vue from 'vue';
 export default class ElFormItemVerifyComponent extends Vue {
-    static fieldChange: 'verify' | 'clear';
-    verify?: string | Function;
-    canBeEmpty?: string;
+    static fieldChange: 'v' | 'clear';
+    v?: string | Function;
+    e?: string;
     space?: string;
     emptyMessage?: string;
     errorMessage?: string;
@@ -11,7 +11,7 @@ export default class ElFormItemVerifyComponent extends Vue {
     fieldChange?: string;
     onValidateMessageChanged(msg: string): void;
     onWatchChanged(): void;
-    readonly _verify: boolean;
+    readonly _v: boolean;
     getRules(): any[];
     clearValidate(): void;
     onFieldChange(): void;

@@ -13,7 +13,7 @@ const exp = {
         if (!ElFormItemComponent)
             throw Error('please install element-ui first');
         errorMessage.setTemplate(options.errorMessageTemplate || defaultErrorMessageTemplate);
-        Component.fieldChange = options.fieldChange || 'verify';
+        Component.fieldChange = options.fieldChange || 'v';
         ElFormItemComponent.mixin(Component);
         init();
     },
@@ -30,7 +30,7 @@ const exp = {
         // 监听prop变化，触发校验
         component.watch = {};
         component.watch[_name] = function () {
-            if (this.verify !== undefined && this.prop)
+            if (this.v !== undefined && this.prop)
                 this.validate('');
         };
         ElFormItemComponent.mixin(component);

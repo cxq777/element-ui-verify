@@ -18,20 +18,20 @@ const ElFormItemMethods = FormItem.methods;
 let ElFormItemVerifyComponent = ElFormItemVerifyComponent_1 = class ElFormItemVerifyComponent extends Vue {
     // watch某值并修改该值本身会额外触发一次，性能影响不大，暂不做过滤了。后期可能会用其它方式拦截
     onValidateMessageChanged(msg) {
-        if (this._verify && msg !== '') {
+        if (this._v && msg !== '') {
             const alias = this.alias || this.label || '该输入项';
             this.validateMessage = errorMessage.macroToValue(this.validateMessage, 'alias', alias);
         }
     }
     onWatchChanged() {
-        if (this._verify)
+        if (this._v)
             this.validate('');
     }
-    get _verify() {
-        return this.verify !== undefined && this.prop;
+    get _v() {
+        return this.v !== undefined && this.prop;
     }
     getRules() {
-        if (!this._verify)
+        if (!this._v)
             return ElFormItemMethods.getRules.apply(this, arguments);
         let asyncVerifyRules = [];
         // 空检测
@@ -42,7 +42,7 @@ let ElFormItemVerifyComponent = ElFormItemVerifyComponent_1 = class ElFormItemVe
         if (fieldValue === '') {
             asyncVerifyRules.push({
                 validator: (rule, val, callback) => {
-                    if (this.canBeEmpty !== undefined || this.minLength <= 0)
+                    if (this.e !== undefined || this.minLength <= 0)
                         callback();
                     else
                         callback(Error(this.emptyMessage || errorMessage.get('empty')));
@@ -63,8 +63,8 @@ let ElFormItemVerifyComponent = ElFormItemVerifyComponent_1 = class ElFormItemVe
                     rule.message = this.errorMessage;
             }
             // 自定义校验方法置后
-            if (typeof this.verify === 'function')
-                asyncVerifyRules.push({ validator: this.verify });
+            if (typeof this.v === 'function')
+                asyncVerifyRules.push({ validator: this.v });
             // 当规则为空时，返回一个始终通过的规则来避免空检测错误无法清除
             // 也可以通过(this as any).clearValidate()的方式实现，不过不太好
             if (asyncVerifyRules.length === 0) {
@@ -76,7 +76,7 @@ let ElFormItemVerifyComponent = ElFormItemVerifyComponent_1 = class ElFormItemVe
             }
         }
         // 使elementUI可以检测到必填项从而展示*号
-        asyncVerifyRules[0].required = this.canBeEmpty === undefined;
+        asyncVerifyRules[0].required = this.e === undefined;
         return asyncVerifyRules;
     }
     // 兼容<2.0.0-beta.1
@@ -92,20 +92,20 @@ let ElFormItemVerifyComponent = ElFormItemVerifyComponent_1 = class ElFormItemVe
     }
     onFieldChange() {
         const fieldChange = this.fieldChange || ElFormItemVerifyComponent_1.fieldChange;
-        if (!this._verify || fieldChange !== 'clear')
+        if (!this._v || fieldChange !== 'clear')
             ElFormItemMethods.onFieldChange.apply(this, arguments);
-        else if (this._verify && fieldChange === 'clear')
+        else if (this._v && fieldChange === 'clear')
             this.clearValidate();
     }
 };
 __decorate([
     Prop([String, Function]),
     __metadata("design:type", Object)
-], ElFormItemVerifyComponent.prototype, "verify", void 0);
+], ElFormItemVerifyComponent.prototype, "v", void 0);
 __decorate([
     Prop(),
     __metadata("design:type", String)
-], ElFormItemVerifyComponent.prototype, "canBeEmpty", void 0);
+], ElFormItemVerifyComponent.prototype, "e", void 0);
 __decorate([
     Prop(),
     __metadata("design:type", String)

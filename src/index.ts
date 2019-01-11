@@ -13,17 +13,17 @@ export interface VerifyRulePropOptions extends PropOptions {
 let installed = false
 let ElFormItemComponent: VueConstructor
 const exp = {
-  install (Vue: VueConstructor<any>, options: { errorMessageTemplate?: ErrorMessageTemplate, fieldChange?: 'clear' | 'verify' } = {}) {
+  install(Vue: VueConstructor<any>, options: { errorMessageTemplate?: ErrorMessageTemplate, fieldChange?: 'clear' | 'v' } = {}) {
     if (installed) return
     installed = true
     ElFormItemComponent = Vue.component('ElFormItem')
     if (!ElFormItemComponent) throw Error('please install element-ui first')
     errorMessage.setTemplate(options.errorMessageTemplate || defaultErrorMessageTemplate)
-    Component.fieldChange = options.fieldChange || 'verify'
+    Component.fieldChange = options.fieldChange || 'v'
     ElFormItemComponent.mixin(Component)
     init()
   },
-  addRule (
+  addRule(
     name: string | VerifyRulePropOptions,
     getter: RuleGetter
   ): RuleGetter {
@@ -36,20 +36,20 @@ const exp = {
     // 监听prop变化，触发校验
     component.watch = {}
     component.watch[_name] = function () {
-      if (this.verify !== undefined && (this as any).prop) (this as any).validate('')
+      if (this.v !== undefined && (this as any).prop) (this as any).validate('')
     }
     ElFormItemComponent.mixin(component)
     return rules(_name, getter)
   },
-  getRule (name: string): RuleGetter {
+  getRule(name: string): RuleGetter {
     return rules(name)
   },
-  getErrorMessage (name: string, templateData?: any): string {
+  getErrorMessage(name: string, templateData?: any): string {
     return errorMessage.get(name, templateData)
   }
 }
 
-function init () {
+function init() {
   // 文本长度
   exp.addRule({ name: 'length', type: Number }, length => ({
     len: length,
@@ -66,7 +66,7 @@ function init () {
   exp.addRule({ name: 'gt', type: Number }, gt => [
     exp.getRule('number')(),
     {
-      validator (rule: any, val: number, callback: Function) {
+      validator(rule: any, val: number, callback: Function) {
         if (val <= gt) callback(Error(exp.getErrorMessage('gt', gt)))
         else callback()
       }
@@ -81,7 +81,7 @@ function init () {
   exp.addRule({ name: 'lt', type: Number }, lt => [
     exp.getRule('number')(),
     {
-      validator (rule: any, val: number, callback: Function) {
+      validator(rule: any, val: number, callback: Function) {
         if (val >= lt) callback(Error(exp.getErrorMessage('lt', lt)))
         else callback()
       }
@@ -100,7 +100,7 @@ function init () {
     maxDecimalLength => [
       exp.getRule('number')(),
       {
-        validator (rule: any, val: number, callback: Function) {
+        validator(rule: any, val: number, callback: Function) {
           const decimal = val.toString().split('.')[1]
           if (decimal && decimal.length > maxDecimalLength) callback(Error(exp.getErrorMessage('maxDecimalLength', maxDecimalLength)))
           else callback()
