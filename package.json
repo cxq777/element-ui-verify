@@ -1,16 +1,9 @@
 {
-  "name": "element-ui-verify",
-  "version": "1.1.8",
-  "description": "如果你受够了饿了么ElementUI原生的校验方式，那就来试试它吧！一款更懂你的校验插件",
+  "name": "element-ui-verify-modify",
+  "version": "0.0.1",
+  "description": "element-ui-verify-modify",
   "keywords": [
-    "vue",
-    "element",
-    "element-ui",
-    "elementUi",
-    "elementUI",
-    "element-ui-validator",
-    "element-ui-verification",
-    "element-ui-check"
+    "vue"
   ],
   "main": "dist/index.js",
   "typings": "types/index.d.ts",
@@ -19,14 +12,14 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/aweiu/element-ui-verify.git"
+    "url": "git+https://github.com/cxq777/element-ui-verify.git"
   },
-  "author": "aweiu",
+  "author": "cxq777",
   "license": "ISC",
   "bugs": {
-    "url": "https://github.com/aweiu/element-ui-verify/issues"
+    "url": "https://github.com/cxq777/element-ui-verify/issues"
   },
-  "homepage": "https://github.com/aweiu/element-ui-verify#readme",
+  "homepage": "https://github.com/cxq777/element-ui-verify#readme",
   "dependencies": {
     "vue-property-decorator": "^6.0.0"
   },

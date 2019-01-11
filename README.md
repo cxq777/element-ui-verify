@@ -1,5 +1,6 @@
-# element-ui-verify
-如果你受够了饿了么ElementUI原生的校验方式，那就来试试它吧！
+# element-ui-verify-modify
+所有版权归原作者
+https://github.com/aweiu/element-ui-verify
 
 ## 前言
 饿了么ElementUI虽好，但表单校验的体验不够理想
@@ -95,7 +96,7 @@ Vue.use(elementUIVerify, {
 若要使用本插件，verify选项是必须的，换句话说，如果没有配置该选项，那么您仍然可以正常使用ElementUI原生的校验
 
 该选项还可以接收一个函数值，用于[自定义校验方法](#自定义校验方法)
-### canBeEmpty
+### e
 > 插件默认开启输入内容不为空校验，如果开启该选项，一旦该输入项为空则会忽略该输入项之后所有的校验
 
 该选项一般用于如下情况，比如邀请码这种一般可以为空，不为空又需要校验的输入项
@@ -197,7 +198,7 @@ export default{
 ### 注意事项
 * 所有选项调用不能有大写字母，用中划线分隔，同vue props属性设置规则
 * length,minLength,gt,gte,lt,lte,maxDecimalLength等需要接收数值的选项，该值需为数字(`:length="1"`)
-* verify,canBeEmpty,space,number,int等无须接收值的选项一旦设置了，可以通过赋值为`undefined`来取消
+* verify,e,space,number,int等无须接收值的选项一旦设置了，可以通过赋值为`undefined`来取消
 
 ## 规则简写
 number,int,phone等无须设定值的选项可以直接：
