@@ -2,7 +2,7 @@ import Vue from 'vue';
 export default class ElFormItemVerifyComponent extends Vue {
     static fieldChange: 'v' | 'clear';
     v?: string | Function;
-    e?: string;
+    r?: string;
     space?: string;
     emptyMessage?: string;
     errorMessage?: string;

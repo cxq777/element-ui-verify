@@ -12,7 +12,7 @@ export default class ElFormItemVerifyComponent extends Vue {
   @Prop([String, Function])
   v?: string | Function
   @Prop()
-  e?: string
+  r?: string
   @Prop()
   space?: string
   @Prop()
@@ -54,7 +54,7 @@ export default class ElFormItemVerifyComponent extends Vue {
     if (fieldValue === '') {
       asyncVerifyRules.push({
         validator: (rule: any, val: any, callback: Function) => {
-          if (this.e !== undefined || (this as any).minLength <= 0) callback()
+          if (this.r === undefined || (this as any).minLength <= 0) callback()
           else callback(Error(this.emptyMessage || errorMessage.get('empty')))
         }
       })
@@ -82,7 +82,7 @@ export default class ElFormItemVerifyComponent extends Vue {
       }
     }
     // 使elementUI可以检测到必填项从而展示*号
-    asyncVerifyRules[0].required = this.e === undefined
+    asyncVerifyRules[0].required = this.r !== undefined
     return asyncVerifyRules
   }
 

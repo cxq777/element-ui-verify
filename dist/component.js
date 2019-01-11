@@ -42,7 +42,7 @@ let ElFormItemVerifyComponent = ElFormItemVerifyComponent_1 = class ElFormItemVe
         if (fieldValue === '') {
             asyncVerifyRules.push({
                 validator: (rule, val, callback) => {
-                    if (this.e !== undefined || this.minLength <= 0)
+                    if (this.r === undefined || this.minLength <= 0)
                         callback();
                     else
                         callback(Error(this.emptyMessage || errorMessage.get('empty')));
@@ -76,7 +76,7 @@ let ElFormItemVerifyComponent = ElFormItemVerifyComponent_1 = class ElFormItemVe
             }
         }
         // 使elementUI可以检测到必填项从而展示*号
-        asyncVerifyRules[0].required = this.e === undefined;
+        asyncVerifyRules[0].required = this.r !== undefined;
         return asyncVerifyRules;
     }
     // 兼容<2.0.0-beta.1
@@ -105,7 +105,7 @@ __decorate([
 __decorate([
     Prop(),
     __metadata("design:type", String)
-], ElFormItemVerifyComponent.prototype, "e", void 0);
+], ElFormItemVerifyComponent.prototype, "r", void 0);
 __decorate([
     Prop(),
     __metadata("design:type", String)
