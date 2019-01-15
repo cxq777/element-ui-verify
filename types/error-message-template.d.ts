@@ -1,4 +1,5 @@
 declare const _default: {
+    require: string;
     number: string;
     int: string;
     maxLength: string;
@@ -8,6 +9,5 @@ declare const _default: {
     regex: string;
     phone: string;
     email: string;
-    empty: string;
 };
 export default _default;

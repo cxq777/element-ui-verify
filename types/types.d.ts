@@ -1,5 +1,6 @@
 export declare type RuleGetter = (ruleVal?: any) => object;
 export declare type ErrorMessageTemplate = {
+    require: string;
     number: string;
     int: string;
     maxLength: string;
@@ -7,6 +8,5 @@ export declare type ErrorMessageTemplate = {
     regex: string;
     phone: string;
     email: string;
-    empty: string;
     [name: string]: string;
 };

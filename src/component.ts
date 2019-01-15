@@ -10,7 +10,11 @@ const ElFormItemMethods: { [methodName: string]: Function } = (FormItem as any).
 export default class ElFormItemVerifyComponent extends Vue {
   static fieldChange: 'v' | 'clear'
   @Prop([String, Function])
+  verify?: string | Function
+  @Prop([String, Function])
   v?: string | Function
+  @Prop()
+  require?: string
   @Prop()
   r?: string
   @Prop()
@@ -41,7 +45,12 @@ export default class ElFormItemVerifyComponent extends Vue {
   }
 
   get _verify(): boolean {
-    return (this.v !== undefined || this.r !== undefined) && (this as any).prop
+    return (
+      this.verify !== undefined ||
+      this.v !== undefined ||
+      this.require !== undefined ||
+      this.r !== undefined
+    ) && (this as any).prop
   }
 
   getRules(): any[] {
@@ -54,8 +63,8 @@ export default class ElFormItemVerifyComponent extends Vue {
     if (fieldValue === '') {
       asyncVerifyRules.push({
         validator: (rule: any, val: any, callback: Function) => {
-          if (this.r === undefined || (this as any).minLength <= 0) callback()
-          else callback(Error(this.emptyMessage || errorMessage.get('empty')))
+          if (this.require === undefined || this.r !== undefined || (this as any).minLength <= 0) callback()
+          else callback(Error(this.emptyMessage || errorMessage.get('require')))
         }
       })
     } else {

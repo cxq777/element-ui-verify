@@ -95,27 +95,26 @@ export default {
 
 
 ## 默认支持的校验规则
+* verify(v)：校验规则开始
 * require（r）：必填
-* number: 校验是否为数字
-* number-max: 校验是否为数字，并且最大值为max
-* number-int: 校验是否为数字，并且最大值为min
+* number(num): 校验是否为数字
+* number-max(num-max): 校验是否为数字，并且最大值为max
+* number-min(num-min): 校验是否为数字，并且最小值为min
 * int: 校验是否为整数
 * int-max: 校验是否为整数，并且最大值为max
-* int-min: 校验是否为整数，并且最大值为min
+* int-min: 校验是否为整数，并且最小值为min
 * max：校验最大长度
 * min：校验最小长度
-* regex：正则表达式
-* 
+* regex：校验是否通过正则表达式匹配
 * phone: 校验是否为手机号
 * email: 校验是否为电子邮件地址
+* qq：校验是否为QQ号
+* wx：校验是否为微信号
 
 
 ## 重要选项说明
-### v
-校验规则开始标志，除 “require”规则以外的规则必须以“v” 开头
+校验规则必须以“verify（v）”或者“require（r）”开头
 
-### require(r)
-验证必填
 
 ## 插件的默认校验不通过提示模版
 ```

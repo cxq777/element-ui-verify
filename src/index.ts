@@ -57,6 +57,7 @@ function init() {
     pattern: /(^[-]?[1-9]\d*\.?\d*$|[-]?0\.\d*[1-9]\d*$)|(^0$)/,
     message: exp.getErrorMessage('number')
   }))
+  exp.addRule('num', () => (exp.getRule('number')()))
 
   // int 整数类型
   // exp.addRule('int', () => ({ type: 'integer', message: exp.getErrorMessage('int') }))
@@ -96,11 +97,13 @@ function init() {
     exp.getRule('number')(),
     { type: 'number', max: max, message: exp.getErrorMessage('max', max) }
   ])
+  exp.addRule('numMax', () => (exp.getRule('numberMax')()))
   // number-min
   exp.addRule({ name: 'numberMin', type: Number }, min => [
     exp.getRule('number')(),
     { type: 'number', min: min, message: exp.getErrorMessage('min', min) }
   ])
+  exp.addRule('numMin', () => (exp.getRule('numberMin')()))
 
   // int-max
   exp.addRule({ name: 'intMax', type: Number }, max => [
@@ -128,13 +131,23 @@ function init() {
     pattern: regex,
     message: exp.getErrorMessage('regex', regex)
   }))
+  // 邮箱
+  exp.addRule('email', () => ({ type: 'email', message: exp.getErrorMessage('email') }))
   // 手机号
   exp.addRule('phone', () => ({
     pattern: /^(?=\d{11}$)^1(?:3\d|4[57]|5[^4\D]|6[67]|7[^249\D]|8\d|9[189])\d{8}$/,
     message: exp.getErrorMessage('phone')
   }))
-  // 邮箱
-  exp.addRule('email', () => ({ type: 'email', message: exp.getErrorMessage('email') }))
+  // QQ
+  exp.addRule('qq', () => ({
+    pattern: /^[1-9]\d{2,15}$/,
+    message: 'QQ格式不正确，正确格式为3至16位数字'
+  }))
+  // 微信
+  exp.addRule('wx', () => ({
+    pattern: /^[a-zA-Z]([-_a-zA-Z0-9]{5,29})$/,
+    message: '微信格式不正确，正确格式为字母开头，长度6到30位'
+  }))
 }
 
 export default exp

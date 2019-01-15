@@ -28,7 +28,10 @@ let ElFormItemVerifyComponent = ElFormItemVerifyComponent_1 = class ElFormItemVe
             this.validate('');
     }
     get _verify() {
-        return (this.v !== undefined || this.r !== undefined) && this.prop;
+        return (this.verify !== undefined ||
+            this.v !== undefined ||
+            this.require !== undefined ||
+            this.r !== undefined) && this.prop;
     }
     getRules() {
         if (!this._verify)
@@ -42,10 +45,10 @@ let ElFormItemVerifyComponent = ElFormItemVerifyComponent_1 = class ElFormItemVe
         if (fieldValue === '') {
             asyncVerifyRules.push({
                 validator: (rule, val, callback) => {
-                    if (this.r === undefined || this.minLength <= 0)
+                    if (this.require === undefined || this.r !== undefined || this.minLength <= 0)
                         callback();
                     else
-                        callback(Error(this.emptyMessage || errorMessage.get('empty')));
+                        callback(Error(this.emptyMessage || errorMessage.get('require')));
                 }
             });
         }
@@ -101,7 +104,15 @@ let ElFormItemVerifyComponent = ElFormItemVerifyComponent_1 = class ElFormItemVe
 __decorate([
     Prop([String, Function]),
     __metadata("design:type", Object)
+], ElFormItemVerifyComponent.prototype, "verify", void 0);
+__decorate([
+    Prop([String, Function]),
+    __metadata("design:type", Object)
 ], ElFormItemVerifyComponent.prototype, "v", void 0);
+__decorate([
+    Prop(),
+    __metadata("design:type", String)
+], ElFormItemVerifyComponent.prototype, "require", void 0);
 __decorate([
     Prop(),
     __metadata("design:type", String)
