@@ -1,17 +1,12 @@
 export type RuleGetter = (ruleVal?: any) => object
 export type ErrorMessageTemplate = {
-  empty: string,
-  length: string,
-  minLength: string,
   number: string,
   int: string,
-  lt: string,
-  lte: string,
-  gt: string,
-  gte: string,
-  maxDecimalLength: string,
+  maxLength: string,
+  minLength: string,
+  regex: string,
   phone: string,
   email: string,
-  verifyCode: string,
+  empty: string,
   [name: string]: string
 }

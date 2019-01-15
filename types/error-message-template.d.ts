@@ -1,16 +1,13 @@
 declare const _default: {
-    empty: string;
-    length: string;
-    minLength: string;
     number: string;
     int: string;
-    lt: string;
-    lte: string;
-    gt: string;
-    gte: string;
-    maxDecimalLength: string;
+    maxLength: string;
+    minLength: string;
+    max: string;
+    min: string;
+    regex: string;
     phone: string;
     email: string;
-    verifyCode: string;
+    empty: string;
 };
 export default _default;

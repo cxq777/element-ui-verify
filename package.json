@@ -1,6 +1,6 @@
 {
   "name": "element-ui-verify-modify",
-  "version": "0.0.3",
+  "version": "0.1.0",
   "description": "element-ui-verify-modify",
   "keywords": [
     "vue"
@@ -32,6 +32,6 @@
     "tslint": "^5.8.0",
     "tslint-config-standard": "^7.0.0",
     "typescript": "^2.6.2",
-    "vue": "^2.5.13"
+    "vue": "^2.5.22"
   }
 }

@@ -1,15 +1,12 @@
 export default {
-  empty: '请补充该项内容',
-  length: '请输入{length}位字符',
-  minLength: '输入内容至少{minLength}位',
-  number: '请输入数字',
-  int: '请输入整数',
-  lt: '输入内容应小于{lt}',
-  lte: '输入内容不能大于{lte}',
-  gt: '输入内容应大于{gt}',
-  gte: '输入内容不能小于{gte}',
-  maxDecimalLength: '该输入项最多接受{maxDecimalLength}位小数',
+  number: '{alias}应为数字',
+  int: '{alias}应为整数',
+  maxLength: '{alias}最长{maxLength}个字符',
+  minLength: '{alias}最短{minLength}个字符',
+  max: '{alias}最大为{max}',
+  min: '{alias}最小为{min}',
+  regex: '{alias}格式不正确',
   phone: '请输入正确的手机号',
   email: '请输入正确的邮箱',
-  verifyCode: '请输入正确的验证码'
+  empty: '请填写{alias}'
 }

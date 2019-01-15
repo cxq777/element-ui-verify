@@ -26,11 +26,12 @@ const exp = {
         else
             props[name.name] = name;
         const _name = typeof name === 'string' ? name : name.name;
+        console.log(_name);
         const component = { props };
         // 监听prop变化，触发校验
         component.watch = {};
         component.watch[_name] = function () {
-            if (this.v !== undefined && this.prop)
+            if ((this.v !== undefined || this.r !== undefined) && this.prop)
                 this.validate('');
         };
         ElFormItemComponent.mixin(component);
@@ -44,78 +45,80 @@ const exp = {
     }
 };
 function init() {
-    // 文本长度
-    exp.addRule({ name: 'length', type: Number }, length => ({
-        len: length,
-        message: exp.getErrorMessage('length', length)
+    // number 数字类型
+    // exp.addRule('number', () => ({ type: 'number', message: exp.getErrorMessage('number') }))
+    exp.addRule('number', () => ({
+        pattern: /(^[-]?[1-9]\d*\.?\d*$|[-]?0\.\d*[1-9]\d*$)|(^0$)/,
+        message: exp.getErrorMessage('number')
     }));
-    // 最小文本长度
-    exp.addRule({ name: 'minLength', type: Number }, minLength => ({
+    // int 整数类型
+    // exp.addRule('int', () => ({ type: 'integer', message: exp.getErrorMessage('int') }))
+    exp.addRule('int', () => ({
+        pattern: /(^-?[1-9]\d*$)|(^0$)/,
+        message: exp.getErrorMessage('int')
+    }));
+    // max
+    exp.addRule({ name: 'max', type: Number }, maxLength => ({
+        max: maxLength,
+        message: exp.getErrorMessage('maxLength', maxLength)
+    }));
+    // min
+    exp.addRule({ name: 'min', type: Number }, minLength => ({
         min: minLength,
         message: exp.getErrorMessage('minLength', minLength)
     }));
-    // 数字类型
-    exp.addRule('number', () => ({ type: 'number', message: exp.getErrorMessage('number') }));
-    // gt
-    exp.addRule({ name: 'gt', type: Number }, gt => [
+    // max
+    // exp.addRule({ name: 'max', type: Number }, max => (
+    //   {
+    //     validator(rule: any, val: any, callback: Function) {
+    //       console.log(val, typeof val)
+    //       if (typeof val === 'number') {
+    //       } else {
+    //       }
+    //     }
+    //   }
+    // ))
+    // number-max
+    exp.addRule({ name: 'numberMax', type: Number }, max => [
         exp.getRule('number')(),
+        { type: 'number', max: max, message: exp.getErrorMessage('max', max) }
+    ]);
+    // number-min
+    exp.addRule({ name: 'numberMin', type: Number }, min => [
+        exp.getRule('number')(),
+        { type: 'number', min: min, message: exp.getErrorMessage('min', min) }
+    ]);
+    // int-max
+    exp.addRule({ name: 'intMax', type: Number }, max => [
+        exp.getRule('int')(),
         {
-            validator(rule, val, callback) {
-                if (val <= gt)
-                    callback(Error(exp.getErrorMessage('gt', gt)));
-                else
-                    callback();
+            type: 'number', max: max, message: exp.getErrorMessage('max', max),
+            transform(value) {
+                return parseInt(value);
             }
         }
     ]);
-    // gte
-    exp.addRule({ name: 'gte', type: Number }, gte => [
-        exp.getRule('number')(),
-        { type: 'number', min: gte, message: exp.getErrorMessage('gte', gte) }
-    ]);
-    // lt
-    exp.addRule({ name: 'lt', type: Number }, lt => [
-        exp.getRule('number')(),
+    // int-min
+    exp.addRule({ name: 'intMin', type: Number }, min => [
+        exp.getRule('int')(),
         {
-            validator(rule, val, callback) {
-                if (val >= lt)
-                    callback(Error(exp.getErrorMessage('lt', lt)));
-                else
-                    callback();
+            type: 'number', min: min, message: exp.getErrorMessage('min', min),
+            transform(value) {
+                return parseInt(value);
             }
         }
     ]);
-    // lte
-    exp.addRule({ name: 'lte', type: Number }, lte => [
-        exp.getRule('number')(),
-        { type: 'number', max: lte, message: exp.getErrorMessage('lte', lte) }
-    ]);
-    // 整数类型
-    exp.addRule('int', () => ({ type: 'integer', message: exp.getErrorMessage('int') }));
-    // 最多小数位
-    exp.addRule({ name: 'maxDecimalLength', type: Number }, maxDecimalLength => [
-        exp.getRule('number')(),
-        {
-            validator(rule, val, callback) {
-                const decimal = val.toString().split('.')[1];
-                if (decimal && decimal.length > maxDecimalLength)
-                    callback(Error(exp.getErrorMessage('maxDecimalLength', maxDecimalLength)));
-                else
-                    callback();
-            }
-        }
-    ]);
-    // 手机号 https://github.com/aweiu/element-ui-verify/issues/24
+    //正则
+    exp.addRule({ name: 'regex', type: String }, regex => ({
+        pattern: regex,
+        message: exp.getErrorMessage('regex', regex)
+    }));
+    // 手机号
     exp.addRule('phone', () => ({
         pattern: /^(?=\d{11}$)^1(?:3\d|4[57]|5[^4\D]|6[67]|7[^249\D]|8\d|9[189])\d{8}$/,
         message: exp.getErrorMessage('phone')
     }));
     // 邮箱
     exp.addRule('email', () => ({ type: 'email', message: exp.getErrorMessage('email') }));
-    // 6位数字验证码
-    exp.addRule('verifyCode', () => ({
-        pattern: /^\d{6}$/,
-        message: exp.getErrorMessage('verifyCode')
-    }));
 }
 export default exp;

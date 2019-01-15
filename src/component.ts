@@ -29,7 +29,7 @@ export default class ElFormItemVerifyComponent extends Vue {
   // watch某值并修改该值本身会额外触发一次，性能影响不大，暂不做过滤了。后期可能会用其它方式拦截
   @Watch('validateMessage')
   onValidateMessageChanged(msg: string) {
-    if (this._v && msg !== '') {
+    if (this._verify && msg !== '') {
       const alias = this.alias || (this as any).label || '该输入项';
       (this as any).validateMessage = errorMessage.macroToValue((this as any).validateMessage, 'alias', alias)
     }
@@ -37,15 +37,15 @@ export default class ElFormItemVerifyComponent extends Vue {
 
   @Watch('watch')
   onWatchChanged() {
-    if (this._v) (this as any).validate('')
+    if (this._verify) (this as any).validate('')
   }
 
-  get _v(): boolean {
-    return this.v !== undefined && (this as any).prop
+  get _verify(): boolean {
+    return (this.v !== undefined || this.r !== undefined) && (this as any).prop
   }
 
   getRules(): any[] {
-    if (!this._v) return ElFormItemMethods.getRules.apply(this, arguments)
+    if (!this._verify) return ElFormItemMethods.getRules.apply(this, arguments)
     let asyncVerifyRules: any[] = []
     // 空检测
     let fieldValue = (this as any).fieldValue
@@ -99,7 +99,7 @@ export default class ElFormItemVerifyComponent extends Vue {
 
   onFieldChange() {
     const fieldChange = this.fieldChange || ElFormItemVerifyComponent.fieldChange
-    if (!this._v || fieldChange !== 'clear') ElFormItemMethods.onFieldChange.apply(this, arguments)
-    else if (this._v && fieldChange === 'clear') this.clearValidate()
+    if (!this._verify || fieldChange !== 'clear') ElFormItemMethods.onFieldChange.apply(this, arguments)
+    else if (this._verify && fieldChange === 'clear') this.clearValidate()
   }
 }
