@@ -26,7 +26,6 @@ const exp = {
         else
             props[name.name] = name;
         const _name = typeof name === 'string' ? name : name.name;
-        console.log(_name);
         const component = { props };
         // 监听prop变化，触发校验
         component.watch = {};

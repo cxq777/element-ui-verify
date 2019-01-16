@@ -32,7 +32,6 @@ const exp = {
     if (typeof name === 'string') props[name] = {}
     else props[name.name] = name
     const _name = typeof name === 'string' ? name : name.name
-    console.log(_name)
     const component: any = { props }
     // 监听prop变化，触发校验
     component.watch = {}

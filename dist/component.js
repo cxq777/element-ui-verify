@@ -45,7 +45,7 @@ let ElFormItemVerifyComponent = ElFormItemVerifyComponent_1 = class ElFormItemVe
         if (fieldValue === '') {
             asyncVerifyRules.push({
                 validator: (rule, val, callback) => {
-                    if (this.require === undefined || this.r !== undefined || this.minLength <= 0)
+                    if ((this.require === undefined && this.r === undefined) || this.minLength <= 0)
                         callback();
                     else
                         callback(Error(this.emptyMessage || errorMessage.get('require')));

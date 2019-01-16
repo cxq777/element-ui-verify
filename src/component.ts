@@ -63,7 +63,7 @@ export default class ElFormItemVerifyComponent extends Vue {
     if (fieldValue === '') {
       asyncVerifyRules.push({
         validator: (rule: any, val: any, callback: Function) => {
-          if (this.require === undefined || this.r !== undefined || (this as any).minLength <= 0) callback()
+          if ((this.require === undefined && this.r === undefined) || (this as any).minLength <= 0) callback()
           else callback(Error(this.emptyMessage || errorMessage.get('require')))
         }
       })
