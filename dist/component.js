@@ -40,6 +40,7 @@ let ElFormItemVerifyComponent = ElFormItemVerifyComponent_1 = class ElFormItemVe
         // 空检测
         let fieldValue = this.fieldValue;
         fieldValue = [undefined, null].includes(fieldValue) ? '' : fieldValue + '';
+        // console.log(fieldValue)
         if (this.space === undefined)
             fieldValue = fieldValue.trim();
         if (fieldValue === '') {

@@ -59,6 +59,7 @@ export default class ElFormItemVerifyComponent extends Vue {
     // 空检测
     let fieldValue = (this as any).fieldValue
     fieldValue = [undefined, null].includes(fieldValue) ? '' : fieldValue + ''
+    // console.log(fieldValue)
     if (this.space === undefined) fieldValue = fieldValue.trim()
     if (fieldValue === '') {
       asyncVerifyRules.push({

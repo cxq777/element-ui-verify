@@ -32,6 +32,7 @@ const exp = {
     if (typeof name === 'string') props[name] = {}
     else props[name.name] = name
     const _name = typeof name === 'string' ? name : name.name
+    // console.log(_name)
     const component: any = { props }
     // 监听prop变化，触发校验
     component.watch = {}
@@ -127,7 +128,7 @@ function init() {
 
   //正则
   exp.addRule({ name: 'regex', type: String }, regex => ({
-    pattern: regex,
+    pattern: new RegExp(regex),
     message: exp.getErrorMessage('regex', regex)
   }))
   // 邮箱
