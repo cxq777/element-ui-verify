@@ -95,15 +95,26 @@ function init() {
   // number-max
   exp.addRule({ name: 'numberMax', type: Number }, max => [
     exp.getRule('number')(),
-    { type: 'number', max: max, message: exp.getErrorMessage('max', max) }
+    {
+      type: 'number', max: max, message: exp.getErrorMessage('max', max),
+      transform(value: any) {
+        return parseFloat(value)
+      }
+    }
   ])
-  exp.addRule('numMax', () => (exp.getRule('numberMax')()))
+  exp.addRule({ name: 'numMax', type: Number }, max => (exp.getRule('numberMax')(max)))
+
   // number-min
   exp.addRule({ name: 'numberMin', type: Number }, min => [
     exp.getRule('number')(),
-    { type: 'number', min: min, message: exp.getErrorMessage('min', min) }
+    {
+      type: 'number', min: min, message: exp.getErrorMessage('min', min),
+      transform(value: any) {
+        return parseFloat(value)
+      }
+    }
   ])
-  exp.addRule('numMin', () => (exp.getRule('numberMin')()))
+  exp.addRule({ name: 'numMin', type: Number }, min => (exp.getRule('numberMin')(min)))
 
   // int-max
   exp.addRule({ name: 'intMax', type: Number }, max => [
