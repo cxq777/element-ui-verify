@@ -55,7 +55,11 @@ function init() {
   // exp.addRule('number', () => ({ type: 'number', message: exp.getErrorMessage('number') }))
   exp.addRule('number', () => ({
     pattern: /(^[-]?[1-9]\d*\.?\d*$|[-]?0\.\d*[1-9]\d*$)|(^0$)/,
-    message: exp.getErrorMessage('number')
+    message: exp.getErrorMessage('number'),
+    // transform(value: any) {
+    //   console.log(1, value)
+    //   return (value)
+    // }
   }))
   exp.addRule('num', () => (exp.getRule('number')()))
 
@@ -115,6 +119,28 @@ function init() {
     }
   ])
   exp.addRule({ name: 'numMin', type: Number }, min => (exp.getRule('numberMin')(min)))
+
+  // number-digit(num-d)
+  exp.addRule({ name: 'numberDigit', type: Number }, digit => [
+    exp.getRule('number')(),
+    {
+      pattern: new RegExp(`^\\d+(\\.\\d{1,${digit}})?$`),
+      message: exp.getErrorMessage('maxDigit', digit),
+      // transform(value: any) {
+      //   console.log(2, value)
+      //   return (value)
+      // }
+    }
+    // {
+    //   validator(rule: any, val: number, callback: Function) {
+    //     const decimal = val.toString().split('.')[1]
+    //     if (decimal && decimal.length > digit) callback(Error(exp.getErrorMessage('maxDigit', digit)))
+    //     else callback()
+    //   }
+    // }
+  ])
+  exp.addRule({ name: 'numD', type: Number }, digit => (exp.getRule('numberDigit')(digit)))
+
 
   // int-max
   exp.addRule({ name: 'intMax', type: Number }, max => [

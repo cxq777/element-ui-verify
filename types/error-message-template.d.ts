@@ -6,6 +6,7 @@ declare const _default: {
     minLength: string;
     max: string;
     min: string;
+    maxDigit: string;
     regex: string;
     phone: string;
     email: string;

@@ -98,11 +98,12 @@ export default {
 * verify(v)：校验规则开始
 * require（r）：必填
 * number(num): 校验是否为数字
-* number-max(num-max): 校验是否为数字，并且最大值为max
-* number-min(num-min): 校验是否为数字，并且最小值为min
+* number-max(num-max): 校验是否为数字，并且验证最大值
+* number-min(num-min): 校验是否为数字，并且验证最小值
+* number-digit(num-d): 校验是否为数字，并且验证小数最多位数
 * int: 校验是否为整数
-* int-max: 校验是否为整数，并且最大值为max
-* int-min: 校验是否为整数，并且最小值为min
+* int-max: 校验是否为整数，并且验证最大值
+* int-min: 校验是否为整数，并且验证最小值
 * max：校验最大长度
 * min：校验最小长度
 * regex：校验是否通过正则表达式匹配
