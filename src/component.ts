@@ -70,9 +70,11 @@ export default class ElFormItemVerifyComponent extends Vue {
       })
     } else {
       // 合并普通规则
+      // console.log("合并普通规则")
       const ruleGetters = rules()
       for (let name in ruleGetters) {
         const ruleVal = (this as any)[name]
+        // console.log(name, ruleVal)
         if (ruleVal !== undefined) asyncVerifyRules = asyncVerifyRules.concat(ruleGetters[name](ruleVal))
       }
       // 统一处理错误提示（代码块放在此处可以只针对普通规则）

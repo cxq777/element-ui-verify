@@ -55,9 +55,11 @@ let ElFormItemVerifyComponent = ElFormItemVerifyComponent_1 = class ElFormItemVe
         }
         else {
             // 合并普通规则
+            // console.log("合并普通规则")
             const ruleGetters = rules();
             for (let name in ruleGetters) {
                 const ruleVal = this[name];
+                // console.log(name, ruleVal)
                 if (ruleVal !== undefined)
                     asyncVerifyRules = asyncVerifyRules.concat(ruleGetters[name](ruleVal));
             }

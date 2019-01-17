@@ -68,17 +68,22 @@ function init() {
         min: minLength,
         message: exp.getErrorMessage('minLength', minLength)
     }));
-    // max
-    // exp.addRule({ name: 'max', type: Number }, max => (
-    //   {
-    //     validator(rule: any, val: any, callback: Function) {
-    //       console.log(val, typeof val)
-    //       if (typeof val === 'number') {
-    //       } else {
-    //       }
-    //     }
-    //   }
-    // ))
+    // number-digit(num-d)
+    exp.addRule({ name: 'numberDigit', type: Number }, digit => [
+        exp.getRule('number')(),
+        {
+            pattern: new RegExp(`^\[-,0-9]+(\\.\\d{0,${digit}})?$`),
+            message: exp.getErrorMessage('maxDigit', digit),
+        }
+        // {
+        //   validator(rule: any, val: number, callback: Function) {
+        //     const decimal = val.toString().split('.')[1]
+        //     if (decimal && decimal.length > digit) callback(Error(exp.getErrorMessage('maxDigit', digit)))
+        //     else callback()
+        //   }
+        // }
+    ]);
+    exp.addRule({ name: 'numD', type: Number }, digit => (exp.getRule('numberDigit')(digit)));
     // number-max
     exp.addRule({ name: 'numberMax', type: Number }, max => [
         exp.getRule('number')(),
@@ -101,22 +106,6 @@ function init() {
         }
     ]);
     exp.addRule({ name: 'numMin', type: Number }, min => (exp.getRule('numberMin')(min)));
-    // number-digit(num-d)
-    exp.addRule({ name: 'numberDigit', type: Number }, digit => [
-        exp.getRule('number')(),
-        {
-            pattern: new RegExp(`^\[-,0-9]+(\\.\\d{0,${digit}})?$`),
-            message: exp.getErrorMessage('maxDigit', digit),
-        }
-        // {
-        //   validator(rule: any, val: number, callback: Function) {
-        //     const decimal = val.toString().split('.')[1]
-        //     if (decimal && decimal.length > digit) callback(Error(exp.getErrorMessage('maxDigit', digit)))
-        //     else callback()
-        //   }
-        // }
-    ]);
-    exp.addRule({ name: 'numD', type: Number }, digit => (exp.getRule('numberDigit')(digit)));
     // int-max
     exp.addRule({ name: 'intMax', type: Number }, max => [
         exp.getRule('int')(),
