@@ -105,7 +105,7 @@ function init() {
     exp.addRule({ name: 'numberDigit', type: Number }, digit => [
         exp.getRule('number')(),
         {
-            pattern: new RegExp(`^\\d+(\\.\\d{1,${digit}})?$`),
+            pattern: new RegExp(`^\[-,0-9]+(\\.\\d{0,${digit}})?$`),
             message: exp.getErrorMessage('maxDigit', digit),
         }
         // {
