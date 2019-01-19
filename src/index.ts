@@ -1,4 +1,4 @@
-import rules from './rules'
+import rule from './rule'
 import Component from './component'
 import errorMessage from './error-message'
 import defaultErrorMessageTemplate from './error-message-template'
@@ -9,19 +9,29 @@ import { RuleGetter, ErrorMessageTemplate } from './types'
 export interface VerifyRulePropOptions extends PropOptions {
   name: string
 }
+export type Rule = { name: string | VerifyRulePropOptions, getter: RuleGetter }
+
 
 let installed = false
 let ElFormItemComponent: VueConstructor
 const exp = {
-  install(Vue: VueConstructor<any>, options: { errorMessageTemplate?: ErrorMessageTemplate, fieldChange?: 'clear' | 'v' } = {}) {
+  install(
+    Vue: VueConstructor<any>,
+    options: {
+      errorMessageTemplate?: ErrorMessageTemplate,
+      fieldChange?: 'clear' | 'v',
+      rules?: [Rule]
+    }
+  ) {
     if (installed) return
     installed = true
     ElFormItemComponent = Vue.component('ElFormItem')
     if (!ElFormItemComponent) throw Error('please install element-ui first')
-    errorMessage.setTemplate(options.errorMessageTemplate || defaultErrorMessageTemplate)
+    Object.assign(defaultErrorMessageTemplate, options.errorMessageTemplate)
+    errorMessage.setTemplate(defaultErrorMessageTemplate)
     Component.fieldChange = options.fieldChange || 'v'
     ElFormItemComponent.mixin(Component)
-    init()
+    init(options.rules)
   },
   addRule(
     name: string | VerifyRulePropOptions,
@@ -40,17 +50,17 @@ const exp = {
       if ((this.v !== undefined || this.r !== undefined) && (this as any).prop) (this as any).validate('')
     }
     ElFormItemComponent.mixin(component)
-    return rules(_name, getter)
+    return rule(_name, getter)
   },
   getRule(name: string): RuleGetter {
-    return rules(name)
+    return rule(name)
   },
   getErrorMessage(name: string, templateData?: any): string {
     return errorMessage.get(name, templateData)
   }
 }
 
-function init() {
+function init(rules?: [Rule]) {
   // number 数字类型
   // exp.addRule('number', () => ({ type: 'number', message: exp.getErrorMessage('number') }))
   exp.addRule('number', () => ({
@@ -166,11 +176,13 @@ function init() {
     pattern: /^[1-9]\d{2,15}$/,
     message: 'QQ格式不正确，正确格式为3至16位数字'
   }))
-  // 微信
-  exp.addRule('wx', () => ({
-    pattern: /^[a-zA-Z]([-_a-zA-Z0-9]{5,29})$/,
-    message: '微信格式不正确，正确格式为字母开头，长度6到30位'
-  }))
+
+  if (rules) {
+    rules.forEach(r => {
+
+      exp.addRule(r.name, r.getter)
+    })
+  }
 }
 
 export default exp

@@ -1,6 +1,6 @@
 import Vue from 'vue'
 import { FormItem } from 'element-ui'
-import rules from './rules'
+import rules from './rule'
 import errorMessage from './error-message'
 import { Component, Prop, Watch } from 'vue-property-decorator'
 

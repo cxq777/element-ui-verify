@@ -10,7 +10,7 @@ var __metadata = (this && this.__metadata) || function (k, v) {
 var ElFormItemVerifyComponent_1;
 import Vue from 'vue';
 import { FormItem } from 'element-ui';
-import rules from './rules';
+import rules from './rule';
 import errorMessage from './error-message';
 import { Component, Prop, Watch } from 'vue-property-decorator';
 // 引用一份，解决某些环境下调用了全局Vue.mixin后再调用原FormItem下的方法会造成调用栈溢出
